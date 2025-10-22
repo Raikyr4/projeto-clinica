@@ -1,4 +1,3 @@
-
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
@@ -8,6 +7,7 @@ from app.schemas.appointment import AppointmentCreate, AppointmentResponse, Appo
 from app.services.appointment_service import AppointmentService
 from app.api.deps import get_current_user, get_current_admin_or_doctor
 from app.models.user import User
+from app.models.appointment import Appointment 
 from app.core.enums import UserRole, AppointmentStatus
 
 router = APIRouter(prefix="/appointments", tags=["Consultas"])
@@ -61,5 +61,3 @@ def update_appointment_status(
         appointment = AppointmentService.update_appointment_status(db, appointment_id, update_data.status)
         return appointment
     raise HTTPException(status_code=400, detail="Status é obrigatório")
-
-

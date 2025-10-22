@@ -17,7 +17,7 @@ class ScheduleSlot(Base):
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=text("now()"))
     updated_at = Column(DateTime(timezone=True), nullable=False, server_default=text("now()"))
     
-    doctor = relationship("User", foreign_keys=[doctor_id])
+    doctor = relationship("User", foreign_keys=[doctor_id], backref="schedule_slots")
     appointment = relationship("Appointment", back_populates="slot", uselist=False)
     
     __table_args__ = (Index('ix_slots_doctor_inicio', 'doctor_id', 'inicio'),)

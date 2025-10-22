@@ -21,7 +21,6 @@ class DoctorProfile(Base):
     valor_padrao_consulta = Column(Numeric(10, 2), nullable=False, default=0)
     
     user = relationship("User", back_populates="doctor_profile")
-    schedule_slots = relationship("ScheduleSlot", back_populates="doctor")
 
 class PatientProfile(Base):
     __tablename__ = "patient_profiles"

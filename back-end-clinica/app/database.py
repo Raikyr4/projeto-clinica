@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker  # <-- import correto
+from sqlalchemy.orm import declarative_base, sessionmaker
 from app.config import settings
 
 # garanta que DATABASE_URL é string
