@@ -4,6 +4,7 @@ from typing import Optional
 from datetime import datetime
 from uuid import UUID
 from app.core.enums import UserRole
+from typing import Any, Optional  # <-- ADICIONE
 
 class UserBase(BaseModel):
     nome: str = Field(..., min_length=3, max_length=200)

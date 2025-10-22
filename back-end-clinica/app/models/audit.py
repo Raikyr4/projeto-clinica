@@ -1,3 +1,8 @@
+from sqlalchemy import Column, String, ForeignKey, text, DateTime
+from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy.orm import relationship
+from app.database import Base
+
 class AuditLog(Base):
     __tablename__ = "audit_logs"
     
