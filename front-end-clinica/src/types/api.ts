@@ -180,3 +180,13 @@ export interface ProximoAtendimento {
   paciente?: string;
   medico?: string;
 }
+
+export interface APIError {
+  detail: string | ValidationError[];
+}
+
+export interface ValidationError {
+  loc: (string | number)[];
+  msg: string;
+  type: string;
+}
