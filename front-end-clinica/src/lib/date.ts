@@ -10,15 +10,36 @@ dayjs.locale("pt-br");
 export const defaultTimezone = "America/Sao_Paulo";
 
 export const formatDate = (date: string | Date, format = "DD/MM/YYYY") => {
-  return dayjs(date).tz(defaultTimezone).format(format);
+  const parsed = dayjs(date).tz(defaultTimezone);
+  
+  if (!parsed.isValid()) {
+    console.error("Data inválida:", date);
+    return "Data inválida";
+  }
+  
+  return parsed.format(format);
 };
 
 export const formatDateTime = (date: string | Date) => {
-  return dayjs(date).tz(defaultTimezone).format("DD/MM/YYYY HH:mm");
+  const parsed = dayjs(date).tz(defaultTimezone);
+  
+  if (!parsed.isValid()) {
+    console.error("Data inválida:", date);
+    return "Data/hora inválida";
+  }
+  
+  return parsed.format("DD/MM/YYYY HH:mm");
 };
 
 export const formatTime = (date: string | Date) => {
-  return dayjs(date).tz(defaultTimezone).format("HH:mm");
+  const parsed = dayjs(date).tz(defaultTimezone);
+  
+  if (!parsed.isValid()) {
+    console.error("Data inválida:", date);
+    return "--:--";
+  }
+  
+  return parsed.format("HH:mm");
 };
 
 export { dayjs };

@@ -17,6 +17,10 @@ import type {
   CreateAppointmentRequest,
   UpdateAppointmentStatusRequest,
   CreatePaymentRequest,
+  ConsultasPorPeriodoResponse,
+  PagamentosPorPeriodoResponse,
+  OcupacaoMedicoResponse,
+  ProximoAtendimento
 } from "@/types/api";
 
 // Auth endpoints
@@ -37,7 +41,7 @@ export const authApi = {
 // Users endpoints (ADMIN only)
 export const usersApi = {
   list: (skip = 0, limit = 50) =>
-    apiClient.get<PaginatedResponse<UserResponse>>("/api/v1/users", { params: { skip, limit } }),
+    apiClient.get<UserResponse[]>("/api/v1/users", { params: { skip, limit } }),
   
   get: (id: string) =>
     apiClient.get<UserResponse>(`/api/v1/users/${id}`),
@@ -60,8 +64,8 @@ export const doctorsApi = {
   get: (id: string) =>
     apiClient.get<DoctorResponse>(`/api/v1/doctors/${id}`),
   
-  getProfile: (id: string) =>
-    apiClient.get<DoctorResponse>(`/api/v1/doctors/${id}/profile`),
+  // getProfile: (id: string) =>
+  //   apiClient.get<DoctorProfileResponse>(`/api/v1/doctors/${id}/profile`),
 };
 
 // Agenda/Slots endpoints
@@ -81,7 +85,7 @@ export const agendaApi = {
 // Appointments endpoints
 export const appointmentsApi = {
   list: (skip = 0, limit = 50) =>
-    apiClient.get<PaginatedResponse<Appointment>>("/api/v1/appointments", {
+    apiClient.get<Appointment[]>("/api/v1/appointments", {
       params: { skip, limit },
     }),
   
@@ -94,8 +98,8 @@ export const appointmentsApi = {
 
 // Payments endpoints
 export const paymentsApi = {
-  list: (skip = 0, limit = 50) =>
-    apiClient.get<PaginatedResponse<Payment>>("/api/v1/payments", {
+ list: (skip = 0, limit = 50) =>
+    apiClient.get<Payment[]>("/api/v1/payments", {
       params: { skip, limit },
     }),
   
@@ -114,13 +118,13 @@ export const dashboardApi = {
 
 export const reportsApi = {
   patientAppointments: () =>
-    apiClient.get<Appointment[]>("/api/v1/reports/patient/appointments"),
+    apiClient.get<ConsultasPorPeriodoResponse>("/api/v1/reports/patient/appointments"),
   
   patientPayments: () =>
-    apiClient.get<Payment[]>("/api/v1/reports/patient/payments"),
+    apiClient.get<PagamentosPorPeriodoResponse>("/api/v1/reports/patient/payments"),
   
   doctorOccupancy: () =>
-    apiClient.get<{ taxa_ocupacao: number }>("/api/v1/reports/doctor/occupancy"),
+    apiClient.get<OcupacaoMedicoResponse>("/api/v1/reports/doctor/occupancy"),
   
   adminMonthlyRevenue: (year: number) =>
     apiClient.get<MonthlyRevenue[]>("/api/v1/reports/admin/monthly-revenue", {

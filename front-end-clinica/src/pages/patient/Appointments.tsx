@@ -32,8 +32,8 @@ export default function Appointments() {
     },
   });
 
-  const appointments = appointmentsData?.items || [];
-  const payments = paymentsData?.items || [];
+  const appointments = appointmentsData || [];;
+  const payments = paymentsData || [];
 
   const getFilteredAppointments = () => {
     if (activeTab === "all") return appointments;

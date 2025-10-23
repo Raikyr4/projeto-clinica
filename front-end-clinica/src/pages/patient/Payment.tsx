@@ -33,10 +33,19 @@ export default function Payment() {
     },
   });
 
-  const appointment = appointmentsData?.items.find((a) => a.id === appointmentId);
+  if (isLoadingAppointments) {
+    return (
+      <div className="container mx-auto px-4 py-6">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  const appointment = (appointmentsData || []).find((a) => a.id === appointmentId);
   
-  // Type guard for doctor with profile
-  const doctorProfile = (appointment?.doctor as any)?.doctor_profile;
+  const doctorProfile = appointment?.doctor 
+    ? (appointment.doctor as any)?.doctor_profile 
+    : null;
 
   const createPaymentMutation = useMutation({
     mutationFn: async () => {
@@ -73,22 +82,17 @@ export default function Payment() {
     createPaymentMutation.mutate();
   };
 
-  if (isLoadingAppointments) {
-    return (
-      <div className="container mx-auto px-4 py-6">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
   if (!appointment) {
     return (
       <div className="container mx-auto px-4 py-6">
         <Card>
           <CardContent className="pt-6">
-            <p className="text-center text-muted-foreground">
-              Consulta não encontrada
-            </p>
+            <div className="text-center space-y-4">
+              <p className="text-muted-foreground">Consulta não encontrada</p>
+              <Button onClick={() => navigate("/app/appointments")}>
+                Voltar para consultas
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -173,12 +177,14 @@ export default function Payment() {
           <CardContent className="space-y-4">
             <div>
               <p className="text-sm text-muted-foreground">Médico</p>
-              <p className="font-medium">{appointment.doctor?.nome}</p>
+              <p className="font-medium">{appointment.doctor?.nome || "Não informado"}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Data e hora</p>
               <p className="font-medium">
-                {formatDateTime(appointment.slot?.inicio || "")}
+                {appointment.slot?.inicio 
+                  ? formatDateTime(appointment.slot.inicio)
+                  : "Não informado"}
               </p>
             </div>
             <div>

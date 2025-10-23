@@ -57,6 +57,8 @@ export interface AgendaSlot {
   inicio: string;
   fim: string;
   status: SlotStatus;
+  created_by?: string;
+  updated_by?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -96,9 +98,9 @@ export interface DashboardKPIs {
 }
 
 export interface MonthlyRevenue {
-  mes: number;
-  ano: number;
-  receita: number;
+  mes: string;  
+  total_consultas: number;
+  valor_total: number;  
 }
 
 export interface PaginatedResponse<T> {
@@ -146,4 +148,35 @@ export interface CreatePaymentRequest {
   appointment_id: string;
   valor: number;
   metodo: PaymentMethod;
+}
+
+export interface ConsultasPorPeriodoResponse {
+  periodo: string;
+  total: number;
+  agendadas: number;
+  realizadas: number;
+  canceladas: number;
+}
+
+export interface PagamentosPorPeriodoResponse {
+  periodo: string;
+  total: number;
+  valor_total: number;
+}
+
+export interface OcupacaoMedicoResponse {
+  doctor_id: string;
+  doctor_nome: string;
+  total_slots: number;
+  slots_livres: number;
+  slots_reservados: number;
+  slots_concluidos: number;
+  taxa_ocupacao: number;
+}
+
+export interface ProximoAtendimento {
+  id: string;
+  data_hora: string;
+  paciente?: string;
+  medico?: string;
 }

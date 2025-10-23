@@ -1,9 +1,9 @@
 -- Usuários (Admin, 2 Médicos, 3 Pacientes)
 INSERT INTO users (id, nome, email, cpf, password_hash, role)
 VALUES
-  ('11111111-1111-1111-1111-111111111111', 'Admin Master', 'admin@clinica.local', '00000000000', crypt('Admin@123', gen_salt('bf')), 'ADMIN'),
-  ('22222222-2222-2222-2222-222222222222', 'Dra. Ana Silva', 'ana.silva@clinica.local', '11111111111', crypt('Medico@123', gen_salt('bf')), 'MEDICO'),
-  ('33333333-3333-3333-3333-333333333333', 'Dr. Bruno Souza', 'bruno.souza@clinica.local', '22222222222', crypt('Medico@123', gen_salt('bf')), 'MEDICO'),
+  ('11111111-1111-1111-1111-111111111111', 'Admin Master', 'admin@clinica.com', '00000000000', crypt('Admin@123', gen_salt('bf')), 'ADMIN'),
+  ('22222222-2222-2222-2222-222222222222', 'Dra. Ana Silva', 'ana.silva@clinica.com', '11111111111', crypt('Medico@123', gen_salt('bf')), 'MEDICO'),
+  ('33333333-3333-3333-3333-333333333333', 'Dr. Bruno Souza', 'bruno.souza@clinica.com', '22222222222', crypt('Medico@123', gen_salt('bf')), 'MEDICO'),
   ('44444444-4444-4444-4444-444444444444', 'Carla Paciente', 'carla@exemplo.com',   '33333333333', crypt('Paciente@123', gen_salt('bf')), 'PACIENTE'),
   ('55555555-5555-5555-5555-555555555555', 'Diego Paciente', 'diego@exemplo.com',   '44444444444', crypt('Paciente@123', gen_salt('bf')), 'PACIENTE'),
   ('66666666-6666-6666-6666-666666666666', 'Eva Paciente',   'eva@exemplo.com',     '55555555555', crypt('Paciente@123', gen_salt('bf')), 'PACIENTE');

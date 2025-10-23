@@ -33,7 +33,7 @@ export default function AdminDashboard() {
     );
   }
 
-  const totalRevenue = monthlyRevenue?.reduce((acc, curr) => acc + curr.receita, 0) || 0;
+ const totalRevenue = monthlyRevenue?.reduce((acc, curr) => acc + curr.valor_total, 0) || 0;
 
   return (
     <div className="space-y-6">
@@ -118,15 +118,15 @@ export default function AdminDashboard() {
             <div className="space-y-4">
               {monthlyRevenue.map((data) => (
                 <div
-                  key={`${data.ano}-${data.mes}`}
+                  key={`${data.mes}`}
                   className="flex items-center justify-between p-4 border rounded-lg"
                 >
                   <div>
                     <p className="font-medium">
-                      {new Date(data.ano, data.mes - 1).toLocaleDateString("pt-BR", {
-                        month: "long",
-                        year: "numeric",
-                      })}
+                    {new Date(data.mes + '-01').toLocaleDateString("pt-BR", {
+                      month: "long",
+                      year: "numeric",
+                    })}
                     </p>
                   </div>
                   <div className="text-right">
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                       {new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
-                      }).format(data.receita)}
+                      }).format(data.valor_total)}
                     </p>
                   </div>
                 </div>

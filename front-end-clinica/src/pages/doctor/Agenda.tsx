@@ -34,7 +34,7 @@ export default function Agenda() {
     enabled: !!user?.id,
   });
 
-  const { data: appointmentsData } = useQuery({
+  const { data: appointmentsData, isLoading: isLoadingAppointments } = useQuery({
     queryKey: ["doctor-appointments-full"],
     queryFn: async () => {
       const { data } = await appointmentsApi.list();
@@ -97,21 +97,27 @@ export default function Agenda() {
 
   const groupSlotsByDate = (slots: AgendaSlot[]) => {
     const grouped: Record<string, AgendaSlot[]> = {};
+    
     slots.forEach((slot) => {
-      const date = formatDate(slot.inicio);
-      if (!grouped[date]) {
-        grouped[date] = [];
+      try {
+        const date = formatDate(slot.inicio);
+        if (!grouped[date]) {
+          grouped[date] = [];
+        }
+        grouped[date].push(slot);
+      } catch (error) {
+        console.error("Erro ao formatar data do slot:", slot, error);
       }
-      grouped[date].push(slot);
     });
+    
     return grouped;
   };
 
   const getAppointmentForSlot = (slotId: string) => {
-    return appointmentsData?.items.find((a) => a.slot_id === slotId);
+    return (appointmentsData || []).find((a) => a.slot_id === slotId);
   };
 
-  if (isLoadingSlots) {
+  if (isLoadingSlots || isLoadingAppointments) {
     return <LoadingSpinner size="lg" />;
   }
 

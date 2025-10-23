@@ -30,7 +30,7 @@ export default function Login() {
       if (!validation.success) {
         throw new Error(validation.error.errors[0].message);
       }
-      debugger;
+      
       const { data: authData } = await authApi.login({ email, password });
       setTokens(authData.access_token, authData.refresh_token);
 

@@ -20,7 +20,7 @@ export default function Users() {
     return <LoadingSpinner size="lg" />;
   }
 
-  const users = usersData?.items || [];
+const users = usersData || [];
 
   return (
     <div className="space-y-6">
