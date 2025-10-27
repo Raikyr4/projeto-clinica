@@ -36,7 +36,6 @@ export function AdminLayout() {
       <header className="border-b bg-card shadow-card sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {/* Atualizado: marca do header em laranja */}
             <div className="rounded-lg bg-tertiary p-2">
               <Activity className="h-5 w-5 text-tertiary-foreground" />
             </div>
@@ -53,7 +52,7 @@ export function AdminLayout() {
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-tertiary text-tertiary-foreground"
                       : "hover:bg-muted"
                   )}
                 >
@@ -68,7 +67,7 @@ export function AdminLayout() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                 <Avatar>
-                  <AvatarFallback className="bg-destructive text-destructive-foreground">
+                  <AvatarFallback className="bg-tertiary text-tertiary-foreground">
                     {user ? getInitials(user.nome) : "A"}
                   </AvatarFallback>
                 </Avatar>
@@ -79,7 +78,7 @@ export function AdminLayout() {
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium">{user?.nome}</p>
                   <p className="text-xs text-muted-foreground">{user?.email}</p>
-                  <p className="text-xs text-destructive font-medium">Administrador</p>
+                  <p className="text-xs text-tertiary font-medium">Administrador</p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
