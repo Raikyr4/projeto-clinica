@@ -33,7 +33,7 @@ export default function AdminDashboard() {
     );
   }
 
- const totalRevenue = monthlyRevenue?.reduce((acc, curr) => acc + curr.valor_total, 0) || 0;
+  const totalRevenue = monthlyRevenue?.reduce((acc, curr) => acc + Number(curr.valor_total), 0) || 0;
 
   return (
     <div className="space-y-6">
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-primary-foreground">
-              {kpis?.total_consultas_mes || 0}
+              {kpis?.total_usuarios_ativos || 0}
             </div>
           </CardContent>
         </Card>
@@ -123,10 +123,10 @@ export default function AdminDashboard() {
                 >
                   <div>
                     <p className="font-medium">
-                    {new Date(data.mes + '-01').toLocaleDateString("pt-BR", {
-                      month: "long",
-                      year: "numeric",
-                    })}
+                      {new Date(data.mes + '-01').toLocaleDateString("pt-BR", {
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </p>
                   </div>
                   <div className="text-right">
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                       {new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
-                      }).format(data.valor_total)}
+                      }).format(Number(data.valor_total))}
                     </p>
                   </div>
                 </div>

@@ -95,6 +95,7 @@ export interface DashboardKPIs {
   faturamento_mes: number;
   taxa_ocupacao: number;
   proximos_atendimentos: Appointment[];
+  total_usuarios_ativos: number;  
 }
 
 export interface MonthlyRevenue {

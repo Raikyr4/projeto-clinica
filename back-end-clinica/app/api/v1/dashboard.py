@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func, and_
@@ -21,6 +20,7 @@ class DashboardKPIs(BaseModel):
     faturamento_mes: Decimal
     taxa_ocupacao: float
     proximos_atendimentos: List[Dict[str, Any]]
+    total_usuarios_ativos: int  # NOVO CAMPO
 
 @router.get("/kpis", response_model=DashboardKPIs)
 def get_dashboard_kpis(
@@ -59,9 +59,10 @@ def get_dashboard_kpis(
     
     faturamento_mes = query_faturamento.scalar() or Decimal(0)
     
-    # Taxa de ocupação (apenas para médicos)
+    # Taxa de ocupação
     taxa_ocupacao = 0.0
     if current_user.role == UserRole.MEDICO:
+        # Para médico: sua taxa individual
         slots = db.query(ScheduleSlot).filter(
             ScheduleSlot.doctor_id == current_user.id,
             ScheduleSlot.inicio >= inicio_mes
@@ -70,6 +71,33 @@ def get_dashboard_kpis(
         if slots:
             ocupados = sum(1 for s in slots if s.status != "LIVRE")
             taxa_ocupacao = (ocupados / len(slots)) * 100
+    elif current_user.role == UserRole.ADMIN:
+        # Para admin: taxa geral de todos os médicos
+        slots = db.query(ScheduleSlot).filter(
+            ScheduleSlot.inicio >= inicio_mes
+        ).all()
+        
+        if slots:
+            ocupados = sum(1 for s in slots if s.status != "LIVRE")
+            taxa_ocupacao = (ocupados / len(slots)) * 100
+    
+    # Total de usuários ativos (novo)
+    total_usuarios_ativos = 0
+    if current_user.role == UserRole.ADMIN:
+        # Para admin: conta todos os usuários ativos
+        total_usuarios_ativos = db.query(func.count(User.id)).filter(
+            User.ativo == True
+        ).scalar() or 0
+    elif current_user.role == UserRole.MEDICO:
+        # Para médico: conta pacientes únicos que tiveram consulta com ele
+        total_usuarios_ativos = db.query(func.count(func.distinct(Appointment.patient_id))).join(
+            ScheduleSlot
+        ).filter(
+            ScheduleSlot.doctor_id == current_user.id
+        ).scalar() or 0
+    elif current_user.role == UserRole.PACIENTE:
+        # Para paciente: sempre 1 (ele mesmo)
+        total_usuarios_ativos = 1
     
     # Próximos atendimentos
     proximos_query = db.query(Appointment).join(ScheduleSlot).filter(
@@ -98,7 +126,6 @@ def get_dashboard_kpis(
         "total_consultas_mes": total_consultas_mes,
         "faturamento_mes": faturamento_mes,
         "taxa_ocupacao": round(taxa_ocupacao, 2),
-        "proximos_atendimentos": proximos_atendimentos
+        "proximos_atendimentos": proximos_atendimentos,
+        "total_usuarios_ativos": total_usuarios_ativos  # NOVO
     }
-
-
