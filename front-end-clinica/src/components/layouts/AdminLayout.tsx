@@ -36,8 +36,9 @@ export function AdminLayout() {
       <header className="border-b bg-card shadow-card sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="rounded-lg bg-primary p-2">
-              <Activity className="h-5 w-5 text-primary-foreground" />
+            {/* Atualizado: marca do header em laranja */}
+            <div className="rounded-lg bg-tertiary p-2">
+              <Activity className="h-5 w-5 text-tertiary-foreground" />
             </div>
             <span className="text-lg font-bold">Admin Portal</span>
           </div>

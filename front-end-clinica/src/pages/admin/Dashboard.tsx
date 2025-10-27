@@ -44,7 +44,6 @@ export default function AdminDashboard() {
         </p>
       </div>
 
-      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="shadow-card">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -58,15 +57,15 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-card">
+        <Card className="shadow-card gradient-tertiary">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-tertiary-foreground">
               Faturamento anual
             </CardTitle>
-            <DollarSign className="h-4 w-4 text-secondary" />
+            <DollarSign className="h-4 w-4 text-tertiary-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold text-tertiary-foreground">
               {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -89,15 +88,15 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-card gradient-primary">
+        <Card className="shadow-card gradient-tertiary">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-primary-foreground">
+            <CardTitle className="text-sm font-medium text-tertiary-foreground">
               Usuários ativos
             </CardTitle>
-            <Users className="h-4 w-4 text-primary-foreground" />
+            <Users className="h-4 w-4 text-tertiary-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary-foreground">
+            <div className="text-2xl font-bold text-tertiary-foreground">
               {kpis?.total_usuarios_ativos || 0}
             </div>
           </CardContent>
