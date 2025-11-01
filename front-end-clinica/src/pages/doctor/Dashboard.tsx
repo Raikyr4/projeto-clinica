@@ -27,7 +27,7 @@ export default function DoctorDashboard() {
     },
   });
 
-  const appointments = appointmentsData?.items || [];
+  const appointments = appointmentsData || [];
 
   if (isLoadingKPIs) {
     return (
